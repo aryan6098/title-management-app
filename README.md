@@ -71,6 +71,7 @@ Frontend application that interacts with an firebase backend to manage user auth
 │   │       └── titleSlice.test.ts
 │   ├── App.tsx              # Main application component
 │   ├── index.tsx            # Entry point of the application
+├── .env                     # Environment variables file
 ├── package.json             # Project metadata and dependencies
 ├── tsconfig.json            # TypeScript configuration                   
 ├── .gitignore               # Ignored files in git
