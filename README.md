@@ -7,11 +7,10 @@ Frontend application that interacts with an firebase backend to manage user auth
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
 - [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [Deployed Application](#deployed-application)
 
 ## Features
 
@@ -49,6 +48,8 @@ Frontend application that interacts with an firebase backend to manage user auth
 │   │   ├── /Common          # Common components used across the app
 │   │   │   ├── InputField.tsx
 │   │   │   ├── CommonButton.tsx
+│   ├── /config              # Configuration files
+│   │   ├── firebaseConfig.ts # Firebase configuration
 │   ├── /context             # Context API for global state management
 │   │   ├── AuthContext.tsx
 │   ├── /hooks               # Custom hooks
@@ -74,27 +75,43 @@ Frontend application that interacts with an firebase backend to manage user auth
 ├── tsconfig.json            # TypeScript configuration                   
 ├── .gitignore               # Ignored files in git
 └── README.md                # Documentation for the project
-
 ```
 
 - **Backend**:
   - Firebase (for authentication)
 
 
-## Available Scripts
+## Getting Started
+1. **Clone the project**:
+   ```bash
+   git clone https://github.com/aryan6098/title-management-app.git
 
-In the project directory, you can run:
+2. Navigate into the project directory
 
-### `npm start`
+    ```bash
+    cd title-management-app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+       ```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+4. Run the app in development mode:\
+    Open [http://localhost:3000](http://localhost:3000)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+5. Sign Up / Login:
+    - You can use the default login credentials:
+        - Email: test@gmail.com
+        - Password: Test@123
 
-### `npm test`
+    - Alternatively, sign up for your own account.
+
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+## Deployed Application
+- **Deployed App**: You can view the deployed application at https://title-management-app.netlify.app/.
+
+
 

@@ -1,4 +1,3 @@
-// src/components/Auth.tsx
 import React from "react";
 import { Button, Paper, Typography, Box, Alert } from "@mui/material";
 import { Formik, Form } from "formik";
@@ -6,10 +5,12 @@ import * as Yup from "yup";
 import { useAuth } from "../../context/AuthContext";
 import InputField from "../Common/InputField/InputField";
 import { signUp } from "../../store/services/authService";
+import { useAppDispatch } from "../../hook/reduxHooks";
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState<boolean>(true);
   const { login, error } = useAuth();
+  const dispatch = useAppDispatch();
 
   const initialValues = {
     email: "",
@@ -33,9 +34,9 @@ const Auth: React.FC = () => {
 
   const handleSubmit = async (values: any) => {
     if (isLogin) {
-      await login(values.email, values.password); // Call login with email and password
+      await login(values.email, values.password); 
     } else {
-      await signUp(values.email, values.password); // Call signUp with email and password
+       await dispatch(signUp(values.email, values.password)); 
     }
   };
 
@@ -61,7 +62,7 @@ const Auth: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, resetForm }) => (
             <Form>
               <InputField name="email" label="Email" type="email" required />
               <InputField
@@ -88,17 +89,22 @@ const Auth: React.FC = () => {
               >
                 {isLogin ? "Login" : "Sign Up"}
               </Button>
+              <Button
+                color="secondary"
+                onClick={() => {
+                  setIsLogin((prev) => !prev);
+                  resetForm();
+                }}
+                fullWidth
+                style={{ marginTop: "10px" }}
+              >
+                {isLogin
+                  ? "Create an account"
+                  : "Already have an account? Login"}
+              </Button>
             </Form>
           )}
         </Formik>
-        <Button
-          color="secondary"
-          onClick={() => setIsLogin((prev) => !prev)}
-          fullWidth
-          style={{ marginTop: "10px" }}
-        >
-          {isLogin ? "Create an account" : "Already have an account? Login"}
-        </Button>
       </Paper>
     </Box>
   );

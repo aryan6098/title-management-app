@@ -1,6 +1,8 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css'; 
 import Auth from './components/Auth/Auth';
 import TitleDashboard from './components/Dashboard/TitleDashboard';
 import { useAuth } from './context/AuthContext';
@@ -11,6 +13,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
+       <ToastContainer />
       {isAuthenticated && <Header />}
       <Routes>
         <Route

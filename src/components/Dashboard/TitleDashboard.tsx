@@ -14,14 +14,16 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { blue, green, red } from "@mui/material/colors";
+
 import { useAuth } from "../../context/AuthContext";
 import { useWalletConnection } from "../../hook/useWalletConnection";
 import CommonButton from "../Common/InputField/CommonButton";
 import InputField from "../Common/InputField/InputField";
 import TitleList from "./TitleList";
-import { useDispatch, useSelector } from "react-redux";
 import { addTitle, closeSnackbar } from "../../store/titleSlice";
 
 interface Title {
@@ -58,6 +60,13 @@ const TitleDashboard: React.FC = () => {
     }
   }, [isAuthenticated]);
 
+  const connectWalletHandler = () => {
+    if(walletAddress) {
+      toast.info(`Already connected to wallet: ${walletAddress.slice(0, 6)}...`)
+    }else {
+      connectWallet()
+    }
+  }
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Paper
@@ -83,7 +92,7 @@ const TitleDashboard: React.FC = () => {
                   : "Connect Wallet"
               }
               variant="contained"
-              onClick={connectWallet}
+              onClick={()=>connectWalletHandler()}
               sx={{
                 backgroundColor: walletAddress ? green[300] : red[500],
                 "&:hover": {
@@ -143,6 +152,7 @@ const TitleDashboard: React.FC = () => {
                     details: values.details,
                   };
                   dispatch(addTitle(newTitle));
+                  resetForm();
                 }}
               >
                 {() => (

@@ -1,6 +1,8 @@
-import React from 'react';
-import { TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, IconButton, InputAdornment } from '@mui/material';
 import { Field } from 'formik';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 interface InputFieldProps {
   label: string;
@@ -10,6 +12,12 @@ interface InputFieldProps {
 }
 
 const InputField: React.FC<InputFieldProps> = ({ label, name, type, required }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <div>
       <Field name={name}>
@@ -17,13 +25,27 @@ const InputField: React.FC<InputFieldProps> = ({ label, name, type, required }) 
           <TextField
             {...field}
             label={label}
-            type={type}
+            type={type === 'password' && !showPassword ? 'password' : 'text'} // Toggle type based on state
             variant="outlined"
             fullWidth
             margin="normal"
             required={required}
-            error={meta.touched && Boolean(meta.error)} // Check if the field has been touched and if there's an error
-            helperText={meta.touched ? meta.error : undefined} // Show the error message if touched
+            error={meta.touched && Boolean(meta.error)}
+            helperText={meta.touched ? meta.error : undefined}
+            InputProps={{
+              endAdornment: type === 'password' && (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={(event) => event.preventDefault()} // Prevent default behavior
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         )}
       </Field>

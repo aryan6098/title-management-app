@@ -4,6 +4,8 @@ import {
   signOut,
   UserCredential,
 } from "firebase/auth";
+import { toast } from "react-toastify";
+
 import { clearUser, setError, setLoading, setUser } from "../authSlice";
 import { auth } from "../../config/firebaseConfig";
 
@@ -13,6 +15,7 @@ export const signUp = (email: string, password: string) => {
     try {
       const userCredential: UserCredential =
         await createUserWithEmailAndPassword(auth, email, password);
+
       dispatch(
         setUser({
           uid: userCredential.user.uid,
@@ -20,7 +23,20 @@ export const signUp = (email: string, password: string) => {
         })
       );
     } catch (error: any) {
-      dispatch(setError("Something went wrong!"));
+      let errorMessage;
+
+      // Check Firebase error codes and provide specific messages
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "Email already exists. Please use a different email.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage = "The email address is not valid.";
+      } else if (error.code === "auth/weak-password") {
+        errorMessage = "Password should be at least 6 characters.";
+      } else {
+        errorMessage = "Something went wrong! Please try again.";
+      }
+      dispatch(setError(errorMessage));
+      toast.error(errorMessage);
     }
   };
 };
@@ -43,8 +59,20 @@ export const signIn = (email: string, password: string) => {
           email: userCredential.user.email,
         })
       );
-    } catch (err) {
-      dispatch(setError("Something went wrong!"));
+      toast.success("Login successful!");
+    } catch (error: any) {
+      let errorMessage = "Something went wrong!";
+      // Handle specific Firebase error messages
+      if (error.code === "auth/invalid-credential") {
+        errorMessage =
+          "Invalid credentials. Please check your email and password.";
+      } else if (error.code === "auth/user-not-found") {
+        errorMessage = "No user found with this email.";
+      } else if (error.code === "auth/wrong-password") {
+        errorMessage = "Incorrect password. Please try again.";
+      }
+      dispatch(setError(errorMessage));
+      toast.error(errorMessage);
     }
   };
 };

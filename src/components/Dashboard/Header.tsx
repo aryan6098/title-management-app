@@ -1,7 +1,7 @@
-// src/components/Header.tsx
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, Box } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 import { useAuth } from "../../context/AuthContext";
 
 const Header: React.FC = () => {
@@ -13,7 +13,7 @@ const Header: React.FC = () => {
         
       <Toolbar>
         <Box flexGrow={1}>
-          <Typography variant="h6">Titles Dashboard</Typography>
+          <Typography variant="h6">Title Management Application</Typography>
         </Box>
         {isAuthenticated && (
           <Box display="flex" alignItems="center">

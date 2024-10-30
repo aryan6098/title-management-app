@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 import { signIn, logout } from "../store/services/authService";
 import { clearUser, setError } from "../store/authSlice";
 import { RootState } from "../store"; // Import your RootState type
@@ -25,9 +27,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      await dispatch(signIn(email, password)); // Handle successful login or throw error
+      await dispatch(signIn(email, password)); 
     } catch (error: any) {
-      dispatch(setError(error.message || "Login failed")); // Dispatch error to Redux
+      console.log("error")
+      const errorMessage = error.message || "Invalid credentials";
+      dispatch(setError(errorMessage)); // Dispatch error to Redux
     }
   };
 
@@ -36,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     dispatch(clearUser());
+    toast.info("You have been logged out successfully.");
   };
   const token = localStorage.getItem("token");
 

@@ -14,8 +14,9 @@ interface TitleState {
 
 const initialState: TitleState = {
   titles: [
-    { id: 1, subject: "Title 1", details: "Description of Title 1" },
-    { id: 2, subject: "Title 2", details: "Description of Title 2" },
+    { id: 1, subject: "Project Alpha", details: "A groundbreaking initiative focusing on AI advancements." },
+    { id: 2, subject: "Marketing Strategies 2024", details: "Overview of innovative marketing strategies to implement in 2024." },
+    { id: 3, subject: "Web Development Trends", details: "Exploration of the latest trends in web development and design." },
   ],
   snackbarOpen: false,
   snackbarMessage: "",
