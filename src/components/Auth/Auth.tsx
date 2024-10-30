@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import InputField from "../Common/InputField/InputField";
 import { signUp } from "../../store/services/authService";
 import { useAppDispatch } from "../../hook/reduxHooks";
+import { setError } from "../../store/authSlice";
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState<boolean>(true);
@@ -94,6 +95,7 @@ const Auth: React.FC = () => {
                 onClick={() => {
                   setIsLogin((prev) => !prev);
                   resetForm();
+                  dispatch(setError(''))
                 }}
                 fullWidth
                 style={{ marginTop: "10px" }}
