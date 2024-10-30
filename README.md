@@ -33,6 +33,7 @@ Frontend application that interacts with an firebase backend to manage user auth
 
 
 ## Project Structure
+```
 /your-project
 ├── /public                  # Publicly accessible files (index.html, favicon, etc.)
 │   ├── index.html
@@ -75,6 +76,7 @@ Frontend application that interacts with an firebase backend to manage user auth
 ├── .gitignore               # Ignored files in git
 └── README.md                # Documentation for the project
 
+```
 
 - **Backend**:
   - Firebase (for authentication)
