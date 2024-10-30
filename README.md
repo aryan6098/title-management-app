@@ -34,7 +34,6 @@ Frontend application that interacts with an firebase backend to manage user auth
 
 ## Project Structure
 ```
-/your-project
 ├── /public                  # Publicly accessible files (index.html, favicon, etc.)
 │   ├── index.html
 │   ├── favicon.ico
