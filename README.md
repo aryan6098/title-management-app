@@ -33,14 +33,11 @@ Frontend application that interacts with an firebase backend to manage user auth
 
 ## Project Structure
 ```
-├── /public                  # Publicly accessible files (index.html, favicon, etc.)
-│   ├── index.html
-│   ├── favicon.ico
-│   └── manifest.json
 ├── /src                     # Main source directory for the application
 │   ├── /components          # Reusable React components
-│   │   ├── /Auth           # Authentication components
-│   │   │   ├── Auth.tsx
+│   │   ├── /Auth            # Authentication components
+│   │   │   ├── Login.tsx            # Login component
+│   │   │   ├── Signup.tsx           # Signup component
 │   │   ├── /Dashboard       # Dashboard components
 │   │   │   ├── TitleDashboard.tsx
 │   │   │   ├── TitleList.tsx
@@ -59,8 +56,10 @@ Frontend application that interacts with an firebase backend to manage user auth
 │   │   ├── /services        # Service files for API calls
 │   │   │   ├── authService.ts  # API calls related to authentication
 │   │   ├── authSlice.ts     # Redux slice for authentication management
-│   │   ├── titleSlice.ts     # Redux slice for titles management
+│   │   ├── titleSlice.ts    # Redux slice for titles management
 │   │   ├── store.ts         # Redux store configuration
+│   ├── /utils               # Utility functions
+│   │   ├── validationUtils.ts # Validation logic for forms
 │   ├── /__tests__           # Unit and integration tests
 │   │   ├── /components       # Tests for components
 │   │   │   ├── TitleDashboard.test.tsx

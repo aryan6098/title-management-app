@@ -1,44 +1,26 @@
 import React from "react";
 import { Button, Paper, Typography, Box, Alert } from "@mui/material";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { useAuth } from "../../context/AuthContext";
 import InputField from "../Common/InputField/InputField";
-import { signUp } from "../../store/services/authService";
-import { useAppDispatch } from "../../hook/reduxHooks";
 import { setError } from "../../store/authSlice";
+import { useAppDispatch } from "../../hook/reduxHooks";
+import { useNavigate } from "react-router-dom";
+import { loginValidationSchema } from "../../utils/validationUtils";
 
-const Auth: React.FC = () => {
-  const [isLogin, setIsLogin] = React.useState<boolean>(true);
+const Login: React.FC = () => {
   const { login, error } = useAuth();
+
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const initialValues = {
     email: "",
     password: "",
-    confirmPassword: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Email address is invalid")
-      .required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters long")
-      .required("Password is required"),
-    confirmPassword: isLogin
-      ? Yup.string().notRequired()
-      : Yup.string()
-          .oneOf([Yup.ref("password")], "Passwords must match")
-          .required("Confirm Password is required"),
-  });
-
-  const handleSubmit = async (values: any) => {
-    if (isLogin) {
-      await login(values.email, values.password); 
-    } else {
-       await dispatch(signUp(values.email, values.password)); 
-    }
+  const handleSubmit = async (values: typeof initialValues) => {
+    await login(values.email, values.password);
   };
 
   return (
@@ -51,16 +33,12 @@ const Auth: React.FC = () => {
     >
       <Paper elevation={3} style={{ padding: "20px", width: "400px" }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          {isLogin ? "Login" : "Sign Up"}
+          Login
         </Typography>
-        {error && (
-          <Alert severity="error" style={{ marginBottom: "10px" }}>
-            {error}
-          </Alert>
-        )}
+        {error && <Alert severity="error">{error}</Alert>}
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={loginValidationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, resetForm }) => (
@@ -72,14 +50,6 @@ const Auth: React.FC = () => {
                 type="password"
                 required
               />
-              {!isLogin && (
-                <InputField
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  required
-                />
-              )}
               <Button
                 variant="contained"
                 color="primary"
@@ -88,21 +58,19 @@ const Auth: React.FC = () => {
                 disabled={isSubmitting}
                 style={{ marginTop: "20px" }}
               >
-                {isLogin ? "Login" : "Sign Up"}
+                Login
               </Button>
               <Button
                 color="secondary"
                 onClick={() => {
-                  setIsLogin((prev) => !prev);
                   resetForm();
-                  dispatch(setError(''))
+                  dispatch(setError(""));
+                  navigate("/signup");
                 }}
                 fullWidth
                 style={{ marginTop: "10px" }}
               >
-                {isLogin
-                  ? "Create an account"
-                  : "Already have an account? Login"}
+                Create an account
               </Button>
             </Form>
           )}
@@ -112,4 +80,4 @@ const Auth: React.FC = () => {
   );
 };
 
-export default Auth;
+export default Login;

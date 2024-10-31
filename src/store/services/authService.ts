@@ -22,6 +22,8 @@ export const signUp = (email: string, password: string) => {
           email: userCredential.user.email,
         })
       );
+      toast.success("Account created successfully!");
+      return true; 
     } catch (error: any) {
       let errorMessage;
 
@@ -37,6 +39,7 @@ export const signUp = (email: string, password: string) => {
       }
       dispatch(setError(errorMessage));
       toast.error(errorMessage);
+      return false;
     }
   };
 };
